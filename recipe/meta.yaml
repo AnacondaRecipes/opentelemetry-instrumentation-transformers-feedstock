@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/traceloop/openllmetry/archive/refs/tags/{{ version }}.tar.gz
-    sha256: 658e9ee9544ff1f6676e96bca947d9329c273620822de9a7cc5638165c59a13e
+  url: https://github.com/traceloop/openllmetry/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 658e9ee9544ff1f6676e96bca947d9329c273620822de9a7cc5638165c59a13e
 
 build:
   number: 0
