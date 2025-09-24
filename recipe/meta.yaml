@@ -1,42 +1,46 @@
 {% set name = "opentelemetry-instrumentation-transformers" %}
-{% set version = "0.47.3" %}
+{% set version = "0.47.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_transformers-{{ version }}.tar.gz
-  sha256: f3206c04900cabe12ff4d98e2314ec3cf5987ed3c8db5504a1757375365e3ffe
+  url: https://github.com/traceloop/openllmetry/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 658e9ee9544ff1f6676e96bca947d9329c273620822de9a7cc5638165c59a13e
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  script: {{ PYTHON }} -m pip install ./packages/{{ name }} -vv --no-deps --no-build-isolation
+  skip: true  # [py<39]
 
 requirements:
   host:
-    - python {{ python_min }}
-    - poetry-core
     - pip
+    - python
+    - poetry-core
   run:
-    - python >={{ python_min }}
+    - python
     - opentelemetry-api >=1.28.0,<2.0.0
     - opentelemetry-instrumentation >=0.50b0
     - opentelemetry-semantic-conventions >=0.50b0
-    - opentelemetry-semantic-conventions-ai >=0.4.12,<0.5.0
+    - opentelemetry-semantic-conventions-ai >=0.4.13,<0.5.0
   run_constrained:
-    - transformers >=4.0
+    - transformers >=4.51.3, <5.0.0
 
 test:
+  source_files:
+    - packages/{{ name }}/tests
   imports:
     - opentelemetry.instrumentation.transformers
   commands:
     - pip check
+    - pytest -v packages/{{ name }}/tests
   requires:
     - pip
-    - python {{ python_min }}
-    - transformers
+    - pytest >=8.2.2,<9
+    - transformers >=4.51.3,<5.0.0
+    - opentelemetry-sdk >=1.34.1,<2
 
 about:
   home: https://www.traceloop.com/openllmetry
@@ -44,8 +48,13 @@ about:
   doc_url: https://www.traceloop.com/docs/openllmetry/introduction
   summary: OpenTelemetry transformers instrumentation
   license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
+  description: |
+    This library allows tracing texte generation calls sent with the official HuggingFace Transformers library.
 
 extra:
   recipe-maintainers:
     - timkpaine
+  skip-lints:
+    - invalid_url
