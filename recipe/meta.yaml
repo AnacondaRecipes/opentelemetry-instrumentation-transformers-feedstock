@@ -41,7 +41,6 @@ test:
   requires:
     - pip
     - pytest >=8.2.2,<9
-    - pytorch
     - transformers >=4.51.3,<5.0.0 # [py<314]
     - transformers >=5.0.0 # [py>=314]
     - opentelemetry-sdk >=1.34.1,<2
