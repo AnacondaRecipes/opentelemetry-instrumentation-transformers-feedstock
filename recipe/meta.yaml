@@ -27,8 +27,6 @@ requirements:
     - opentelemetry-instrumentation >=0.59b0
     - opentelemetry-semantic-conventions >=0.59b0
     - opentelemetry-semantic-conventions-ai >=0.5.1,<0.6.0
-  run_constrained:
-    - transformers
 
 test:
   source_files:
